@@ -5,7 +5,7 @@ import (
 
   "github.com/gorilla/mux"
 
-  "github.com/tendermint/tmlibs/common"
+  sdk "github.com/cosmos/cosmos-sdk"
   "github.com/cosmos/cosmos-sdk/client/commands"
 )
 
@@ -14,11 +14,11 @@ func queryStatus(w http.ResponseWriter, r *http.Request) {
   c := commands.GetNode()
   status, err := c.Status()
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
     return
   }
   if err := printResult(w, status); err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
   }
 }
 

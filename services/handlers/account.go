@@ -12,7 +12,7 @@ import (
   "github.com/cosmos/cosmos-sdk/client/commands/query"
   "github.com/cosmos/cosmos-sdk/modules/coin"
   "github.com/cosmos/cosmos-sdk/stack"
-  "github.com/tendermint/tmlibs/common"
+  sdk "github.com/cosmos/cosmos-sdk"
 )
 
 // queryAccount is to query an account by address
@@ -21,7 +21,7 @@ func queryAccount(w http.ResponseWriter, r *http.Request) {
   address := args["address"]
   actor, err := commands.ParseActor(address)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
     return
   }
 
@@ -32,15 +32,15 @@ func queryAccount(w http.ResponseWriter, r *http.Request) {
   height, err := query.GetParsed(key, account, query.GetHeight(), prove)
   if client.IsNoDataErr(err) {
     err := fmt.Errorf("account bytes are empty for address: %q", address)
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
     return
   } else if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
     return
   }
 
   if err := query.FoutputProof(w, account, height); err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
 }
 

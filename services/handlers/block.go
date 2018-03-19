@@ -6,7 +6,7 @@ import (
   "github.com/gorilla/mux"
   "github.com/spf13/cast"
 
-  "github.com/tendermint/tmlibs/common"
+  sdk "github.com/cosmos/cosmos-sdk"
   "github.com/cosmos/cosmos-sdk/client/commands"
 )
 
@@ -19,11 +19,11 @@ func queryBlock(w http.ResponseWriter, r *http.Request) {
   h := cast.ToInt64(height)
   block, err := c.Block(&h)
   if err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
     return
   }
   if err := printResult(w, block); err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
   }
 }
 
@@ -36,11 +36,11 @@ func queryValidators(w http.ResponseWriter, r *http.Request) {
   h := cast.ToInt64(height)
   block, err := c.Validators(&h)
   if err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
     return
   }
   if err := printResult(w, block); err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
   }
 }
 
@@ -49,11 +49,11 @@ func queryRecentBlocks(w http.ResponseWriter, r *http.Request) {
   c := commands.GetNode()
   blocks, err := c.BlockchainInfo(0,0)
   if err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
     return
   }
   if err := printResult(w, blocks); err != nil {
-    common.WriteError(w, err)    
+    sdk.WriteError(w, err)
   }
 }
 

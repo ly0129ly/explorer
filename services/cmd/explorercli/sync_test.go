@@ -9,10 +9,11 @@ import (
 )
 
 func TestProcessSync(t *testing.T) {
-	c := client.GetNode("tcp://116.62.62.39:46657")
+	c := client.GetNode("tcp://47.104.155.125:46757")
 	db.Mgo.Init("localhost:27017")
 	processSync(c)
+	processWatch(c)
 
 	log.Printf(" finish %s","ok")
-	time.Sleep(5 * time.Minute)
+	time.Sleep(35 * time.Minute)
 }

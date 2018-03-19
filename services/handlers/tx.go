@@ -41,7 +41,7 @@ func queryRawTx(w http.ResponseWriter, r *http.Request) {
 
   err := getTx(w, txhash, raw)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
 }
 
@@ -53,7 +53,7 @@ func queryTx(w http.ResponseWriter, r *http.Request) {
 
   err := getTx(w, txhash, raw)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
 }
 
@@ -110,7 +110,7 @@ func searchTxByBlock(w http.ResponseWriter, r *http.Request) {
 
   wrap, err := searchTx(w, query)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
   // display
   printResult(w, wrap)
@@ -124,7 +124,7 @@ func searchCoinTxByAccount(w http.ResponseWriter, r *http.Request) {
   account := args["address"]
   actor, err := commands.ParseActor(account)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
     return
   }
 
@@ -133,7 +133,7 @@ func searchCoinTxByAccount(w http.ResponseWriter, r *http.Request) {
 
   wrap, err := searchTx(w, findSender, findReceiver)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
   // display
   printResult(w, wrap)
@@ -189,7 +189,7 @@ func decodeRaw(w http.ResponseWriter, r *http.Request) {
 
   err := decode(w, body)
   if err != nil {
-    common.WriteError(w, err)
+    sdk.WriteError(w, err)
   }
 }
 

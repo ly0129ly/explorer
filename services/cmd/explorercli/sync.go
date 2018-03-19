@@ -34,7 +34,7 @@ var (
 	}
 )
 
-func prepareSync(c rpcclient.Client){
+func processSync(c rpcclient.Client){
 	url := viper.GetString(MgoUrl)
 	db.Mgo.Init(url)
 	block,err := db.Mgo.QueryLastedBlock()
@@ -51,19 +51,17 @@ func prepareSync(c rpcclient.Client){
 	}
 
 	//开始漏单查询
-	go sync(block)
+	sync(block,c)
 }
 
 func startWatch() error {
 	c := commands.GetNode()
-	prepareSync(c)
-
-
 	processSync(c)
+	processWatch(c)
 	return nil
 }
 
-func processSync(c rpcclient.Client){
+func processWatch(c rpcclient.Client){
 	log.Printf("watched Transactions start")
 
 	ctx, _ := context.WithTimeout(context.Background(), 10 * time.Second)
@@ -171,9 +169,8 @@ func queryBlockTime(c rpcclient.Client,height int64) time.Time{
 	return block.BlockMeta.Header.Time
 }
 
-func sync(curBlock db.SyncBlock) {
+func sync(curBlock db.SyncBlock ,c rpcclient.Client) {
 	log.Printf("sync Transactions start")
-	c := commands.GetNode()
 
 	current := curBlock.CurrentPos
 	latest := int64(0)
@@ -216,6 +213,7 @@ func sync(curBlock db.SyncBlock) {
 		}
 		current = blocks.BlockMetas[0].Header.Height + 1
 		latest = blocks.LastHeight
+		log.Printf("current block height:%d",current - 1)
 	}
 
 	curBlock.CurrentPos = current
