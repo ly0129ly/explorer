@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	DbCosmosTxn = "cosmos_txn"
+	DbCosmosTxn = "cosmos_txn_temp"
 	TbNmCoinTx = "coin_tx"
 	TbNmStakeTx = "stake_tx"
 	TbNmSyncBlock = "sync_block"

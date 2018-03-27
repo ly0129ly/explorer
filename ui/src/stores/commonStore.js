@@ -2,7 +2,7 @@ import { observable, action, runInAction } from "mobx"
 import { StatusAPI } from "../api"
 
 class CommonStore {
-  @observable appName = "Cosmos Gaia Explorer (by CyberMiles)"
+  @observable appName = "Pangu Testnet Iris Block Explorer"
   @observable isLoading = false
   @observable status = {}
   @observable error = undefined

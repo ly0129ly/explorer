@@ -12,8 +12,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/modules/nonce"
 	"github.com/cosmos/cosmos-sdk/client/commands"
 	"github.com/tendermint/go-wire/data"
-	"github.com/ly0129ly/explorer/services/modules/stake"
-	"github.com/ly0129ly/explorer/services/modules/db"
+
 	"time"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
 	"context"
@@ -21,6 +20,9 @@ import (
 	"encoding/hex"
 	"github.com/tendermint/tendermint/types"
 	"github.com/spf13/cast"
+
+	"github.com/ly0129ly/explorer/services/modules/stake"
+	"github.com/ly0129ly/explorer/services/modules/db"
 )
 
 var (
@@ -82,6 +84,7 @@ func processWatch(c rpcclient.Client){
 			deliverTxRes := e.(types.TMEventData).Unwrap().(types.EventDataTx)
 			height := deliverTxRes.Height
 
+			log.Printf("tx:%v",deliverTxRes.Tx)
 			txb, _ := sdk.LoadTx(deliverTxRes.Tx)
 			txtype, tx :=parseTx(txb)
 			if (txtype == "coin") {
